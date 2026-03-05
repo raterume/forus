@@ -1,0 +1,71 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+</head>
+
+<body>
+
+  <div id="app" class="ui container">
+    <h1>Центр уведомлений</h1>
+    <p>чтобы посмотреть уведомления нажимайте на соответствующие кнопки</p>
+
+    <notification-message>
+      <p>да-да уведомления на кнопках!</p>
+      <p>чтобы закрыть нужно нажать на крестик, кнопки только открывают</p>
+    </notification-message>
+    
+    <notification-message type="error" header="о нет!" color="negative">
+      <p>Вы накодили <b>ошибку</b></p>
+    </notification-message>
+
+    <notification-message type="success" header="о да!" color="positive">
+      <p><b>Ура!</b> Вы избежали ошибки</p>
+    </notification-message>
+
+
+
+  </div>
+
+  <script type="text/x-template" id="notification-message-template">
+
+    <div class="ui message" :class="type" v-if="!hidden">
+      <i class="close icon" @click="hide"></i>
+      <div class="header">
+        {{header}}
+      </div>
+      <slot></slot>
+    </div>
+    <button class="ui basic button" :class="color" @click="show">{{type}}</button>
+  </script>
+
+  <script src="https://unpkg.com/vue@3"></script>
+
+  <script>
+    Vue.createApp({})
+    .component('notification-message',{
+      template: '#notification-message-template',
+      props:{
+        type: {type: String, default: 'info'},
+        header: {type: String, default: 'Окак'},
+        color: {type: String, default: 'primary'}
+      },
+      data(){
+        return{
+          hidden: true
+        }
+      },
+      methods:{
+        hide(){
+          this.hidden = true
+        },
+        show(){
+          this.hidden = false
+        }
+      }
+    })
+    .mount('#app')
+  </script>
+</body>
+
+</html> 
